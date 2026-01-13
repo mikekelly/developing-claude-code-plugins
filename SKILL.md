@@ -4,12 +4,9 @@ description: "Build, test, and distribute Claude Code plugins with slash command
 ---
 
 <essential_principles>
-
-## How Claude Code Plugins Work
-
 Plugins extend Claude Code with reusable functionality: custom slash commands, agents, skills, hooks, MCP servers, and LSP servers. Unlike standalone `.claude/` configurations, plugins are namespaced, versioned, and distributable through marketplaces.
 
-### 1. Plugin Structure Is Sacred
+**1. Plugin Structure Is Sacred**
 
 ```
 my-plugin/
@@ -26,15 +23,15 @@ my-plugin/
 
 **CRITICAL**: Never put commands/, agents/, skills/, or hooks/ inside `.claude-plugin/`. Only `plugin.json` goes there.
 
-### 2. Namespacing Prevents Conflicts
+**2. Namespacing Prevents Conflicts**
 
 Plugin commands use format `/plugin-name:command-name`. The `name` field in plugin.json becomes the namespace prefix. Choose names carefully - they're public-facing.
 
-### 3. Use `${CLAUDE_PLUGIN_ROOT}` for Paths
+**3. Use `${CLAUDE_PLUGIN_ROOT}` for Paths**
 
 All paths in hooks, MCP servers, and scripts must use `${CLAUDE_PLUGIN_ROOT}` to reference plugin files. Plugins are copied to a cache directory, so relative paths like `../` won't work.
 
-### 4. Test with `--plugin-dir` During Development
+**4. Test with `--plugin-dir` During Development**
 
 ```bash
 claude --plugin-dir ./my-plugin
@@ -69,7 +66,7 @@ This loads your plugin without installation. Restart Claude Code after changes.
 </routing>
 
 <verification_loop>
-## After Every Change
+**After Every Change:**
 
 1. Validate plugin structure:
 ```bash
@@ -93,8 +90,6 @@ Report to user:
 </verification_loop>
 
 <reference_index>
-## Domain Knowledge
-
 All in `references/`:
 
 **Structure:** plugin-structure.md
@@ -104,8 +99,6 @@ All in `references/`:
 </reference_index>
 
 <workflows_index>
-## Workflows
-
 All in `workflows/`:
 
 | Workflow | Purpose |
@@ -115,3 +108,13 @@ All in `workflows/`:
 | test-debug-plugin.md | Test locally and fix issues |
 | create-marketplace.md | Create and host plugin marketplace |
 </workflows_index>
+
+<success_criteria>
+A well-built plugin:
+- Has valid plugin.json manifest in `.claude-plugin/`
+- Components are in correct directories (commands/, agents/, skills/, hooks/)
+- All paths use `${CLAUDE_PLUGIN_ROOT}` variable
+- Passes `claude plugin validate`
+- Loads correctly with `--plugin-dir`
+- Commands appear in `/help` output
+</success_criteria>
